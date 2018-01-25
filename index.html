@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>Talon Item Commands</title>
+    <script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="json2html.js"></script>
+    <script type="text/javascript" src="jquery.json2html.js"></script>
+    <
+</head>
+<body>
+</body>
+<footer>
+    <script>
+        $.ajax({
+            url: 'http://10.27.67.2:5800/v1/inventory',
+            dataType: 'text',
+            success: function(data) {
+                console.log(JSON.parse(data));
+                var JSONdata = {
+                    'master' : {
+                        '<>' : 'div',
+                        'class':'dashboard',
+                        'id':'dash',
+                        'html':[
+                            {
+                            '<>' : 'div',
+                            'class' : 'talons',
+                            'html' : function() {
+                                //console.log(json2html.transform(data,JSONdata.talon));
+                                return(json2html.transform(data,JSONdata.talon));
+                            }}
+                        ]
+                    },
+                    'talon':{
+                        '<>':'div',
+                        'class': 'talon',
+                        'html':[
+                        {
+                            '<>':'div',
+                            'class':'property',
+                            'html':'${baseId}'
+                        },
+                        {
+                            '<>':'div',
+                            'class':'property',
+                            'html':'${description}'
+                        },
+                        {
+                            '<>':'div',
+                            'class':'property',
+                            'html':'${busVoltage}'
+                        }
+                        ]
+                    },
+                    'talons':{
+                        '<>':'ul',
+                        'html':function(){
+                            return(json2html.transform(data,JSONdata.talon));
+                        }
+                    }
+                };
+                //console.log(json2html.transform({},JSONdata.talons));
+                document.write(json2html.transform({},JSONdata.master));
+                }
+            });
+    </script>
+</footer>
+</html>
